@@ -1,0 +1,26 @@
+body {
+    width: 100%;
+    height: 100vh;
+    margin: 0px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    gap: 8px;
+    background-color: #0097FF;
+}
+
+button {
+    font-size: 48px;
+    color: white;
+    font-weight: bolder;
+    background-color: #D06EF8;
+    border: 4px solid #B600FF;
+    height: 100px;
+    width: 300px;
+}
