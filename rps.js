@@ -43,30 +43,52 @@ function game() {
     let wins = 0;
     let losses = 0;
     let ties = 0;
-    //for (i = 0; i < 5; i++) {
-        let playerChoice = prompt("Rock, Paper, or Scissors?");
-        let msg = playRound(playerChoice, getComputerChoice());
-        console.log(msg);
-        if (msg.search(/win/) != -1) {
-            wins += 1;
-        }
-        else if (msg.search(/lose/) != - 1) {
-            losses += 1;
-        }
-        else if (msg.search(/tie/) != - 1) {
-            ties += 1;
-        }
-    //}
+    let playerChoice = prompt("Rock, Paper, or Scissors?");
+    let msg = playRound(playerChoice, getComputerChoice());
+    console.log(msg);
+    if (msg.search(/win/) != -1) {
+        wins += 1;
+    }
+    else if (msg.search(/lose/) != - 1) {
+        losses += 1;
+    }
+    else if (msg.search(/tie/) != - 1) {
+        ties += 1;
+    }
 }
 
+const container = document.querySelector(".container");
 const buttons = document.querySelectorAll("button");
+const resultDiv = document.createElement("div");
+let triggered = false;
+
+resultDiv.setAttribute("style", "display: flex; flex-flow: column nowrap; background-color: #D06EF8; border: 4px solid #B600FF; text-align: center;")
+
 buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        if (!triggered) {
+            let wordResult = document.createElement("div");
+            wordResult.textContent = "RESULT";
+            wordResult.setAttribute("style", "font-size: 64px; color: white;");
+
+            resultDiv.appendChild(wordResult);
+        }
+        triggered = true;
+    });
+
     button.addEventListener('click', e => {
         let rst = playRound(e.target.textContent, getComputerChoice());
 
-        const container = document.querySelector(".container");
+        const remove = document.querySelector(".showResult");
+        if (remove)
+            resultDiv.removeChild(remove);
+
         const textResult = document.createElement("div");
         textResult.textContent = rst;
-        container.appendChild(textResult);
+        textResult.setAttribute("style", "text-align: center; color: white; font-size: 32px;");
+        textResult.classList.add("showResult");
+        resultDiv.appendChild(textResult);
     });
 });
+
+container.appendChild(resultDiv);
