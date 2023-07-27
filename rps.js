@@ -43,7 +43,7 @@ function game() {
     let wins = 0;
     let losses = 0;
     let ties = 0;
-    for (i = 0; i < 5; i++) {
+    //for (i = 0; i < 5; i++) {
         let playerChoice = prompt("Rock, Paper, or Scissors?");
         let msg = playRound(playerChoice, getComputerChoice());
         console.log(msg);
@@ -56,5 +56,17 @@ function game() {
         else if (msg.search(/tie/) != - 1) {
             ties += 1;
         }
-    }
+    //}
 }
+
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => {
+    button.addEventListener('click', e => {
+        let rst = playRound(e.target.textContent, getComputerChoice());
+
+        const container = document.querySelector(".container");
+        const textResult = document.createElement("div");
+        textResult.textContent = rst;
+        container.appendChild(textResult);
+    });
+});
