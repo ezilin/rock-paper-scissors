@@ -17,52 +17,75 @@ function playRound(playerSelection, computerSelection) {
     }
 
     if (playerChoice == computerChoice) {
-        return `Tie! ${computerSelection} vs. ${computerSelection}`;
+        return `Tie! ${computerSelection} vs. ${computerSelection}!`;
     }
     else if (playerChoice == "rock" && computerChoice == "paper") {
-        return "You lose! Paper beats Rock";
+        return "You lose! Paper beats Rock!";
     }
     else if (playerChoice == "rock" && computerChoice == "scissors") {
-        return "You win! Rock beats Scissors";
+        return "You win! Rock beats Scissors!";
     }
     else if (playerChoice == "paper" && computerChoice == "scissors") {
-        return "You lose! Scissors beats Paper"
+        return "You lose! Scissors beats Paper!"
     }
     else if (playerChoice == "paper" && computerChoice == "rock") {
-        return "You win! Paper beats Rock"
+        return "You win! Paper beats Rock!"
     }
     else if (playerChoice == "scissors" && computerChoice == "rock") {
-        return "You lose! Rock beats Scissors"
+        return "You lose! Rock beats Scissors!"
     }
     else {
-        return "You win! Scissors beats Paper"
-    }
-}
-
-function game() {
-    let wins = 0;
-    let losses = 0;
-    let ties = 0;
-    let playerChoice = prompt("Rock, Paper, or Scissors?");
-    let msg = playRound(playerChoice, getComputerChoice());
-    console.log(msg);
-    if (msg.search(/win/) != -1) {
-        wins += 1;
-    }
-    else if (msg.search(/lose/) != - 1) {
-        losses += 1;
-    }
-    else if (msg.search(/tie/) != - 1) {
-        ties += 1;
+        return "You win! Scissors beats Paper!"
     }
 }
 
 const container = document.querySelector(".container");
 const buttons = document.querySelectorAll("button");
 const resultDiv = document.createElement("div");
+const player = document.querySelector(".player");
+const computer = document.querySelector(".computer")
 let triggered = false;
 
-resultDiv.setAttribute("style", "display: flex; flex-flow: column nowrap; background-color: #D06EF8; border: 4px solid #B600FF; text-align: center;")
+player.textContent = 0;
+computer.textContent = 0;
+
+resultDiv.setAttribute("style", "display: flex; flex-flow: column nowrap; background-color: #D06EF8; border: 4px solid #B600FF; text-align: center; margin-top: 100px;")
+resultDiv.classList.add("result");
+
+function game(e) {
+    let rst = playRound(e.target.textContent, getComputerChoice());
+
+    const remove = document.querySelector(".showResult");
+    if (remove)
+        resultDiv.removeChild(remove);
+
+    const textResult = document.createElement("div");
+    textResult.textContent = rst;
+    textResult.setAttribute("style", "text-align: center; color: white; font-size: 32px;");
+    textResult.classList.add("showResult");
+    resultDiv.appendChild(textResult);
+
+    if (rst.search(/win/) != -1) {
+        player.textContent = Number(player.textContent) + 1;
+        if (player.textContent == 5) {
+            textResult.textContent = "Player Wins!";
+            buttons.forEach(button => button.removeEventListener("click", game));
+            container.setAttribute("style", "background-image: url(./images/gigachad.jpg);");
+        }
+    }
+    else if (rst.search(/lose/) != -1) {
+        computer.textContent = Number(computer.textContent) + 1;
+        if (computer.textContent == 5) {
+            textResult.textContent = "Computer Wins!";
+            buttons.forEach(button => button.removeEventListener("click", game));
+            container.setAttribute("style", "background-image: url(./images/soy.jpg);");
+        }
+    }
+
+    let exist = document.querySelector(".result");
+    if (!exist)
+        container.appendChild(resultDiv);
+}
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
@@ -76,19 +99,5 @@ buttons.forEach(button => {
         triggered = true;
     });
 
-    button.addEventListener('click', e => {
-        let rst = playRound(e.target.textContent, getComputerChoice());
-
-        const remove = document.querySelector(".showResult");
-        if (remove)
-            resultDiv.removeChild(remove);
-
-        const textResult = document.createElement("div");
-        textResult.textContent = rst;
-        textResult.setAttribute("style", "text-align: center; color: white; font-size: 32px;");
-        textResult.classList.add("showResult");
-        resultDiv.appendChild(textResult);
-    });
+    button.addEventListener('click', game);
 });
-
-container.appendChild(resultDiv);

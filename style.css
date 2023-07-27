@@ -6,21 +6,52 @@ body {
 
 .container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
+    flex-flow: column nowrap;
     width: 100%;
     height: 100%;
     gap: 8px;
     background-color: #0097FF;
 }
 
+button,
+.player,
+.computer {
+    background-color: #D06EF8;
+    border: 4px solid #B600FF;
+}
+
 button {
+    margin-top: 300px;
     font-size: 48px;
     color: white;
     font-weight: bolder;
-    background-color: #D06EF8;
-    border: 4px solid #B600FF;
     height: 100px;
     width: 300px;
+}
+
+.scores {
+    display: flex;
+    justify-content: space-around;
+    align-self: normal;
+}
+
+.playerScore,
+.computerScore {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    color: white;
+    font-size: 32px;
+}
+
+.player,
+.computer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100px;
+    color: white;
+    font-size: 80px;
 }
